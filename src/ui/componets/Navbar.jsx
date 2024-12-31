@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/context/AuthContext';
 
 export const Navbar = () => {
+
+    const {user, logout} = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -9,6 +12,7 @@ export const Navbar = () => {
         navigate('/login', {
             replace: true
         });
+        logout();
     }
 
     return (
@@ -37,6 +41,13 @@ export const Navbar = () => {
                     >
                         DC
                     </NavLink>
+
+                    <NavLink 
+                        className={({ isActive }) => `nav-item nav-link ${ isActive ? 'active' : '' }`}  
+                        to="/search"
+                    >
+                        Search
+                    </NavLink>
                 </div>
             </div>
 
@@ -45,7 +56,7 @@ export const Navbar = () => {
                     <span 
                         className="nav-item nav-link text-primary"
                     >
-                        Andres
+                        {user?.name}
                     </span>
 
                     <button 
